@@ -1,17 +1,4 @@
-var users = [
-    {
-        id:1,
-        name:'hiyo'
-    },
-    {
-        id:2,
-        name:'poatan'
-    },
-    {
-        id:3,
-        name:'hello'
-    },
-]
+const models = require('../../models');
 
 const index = (req,res) => {
     req.query.limit = req.query.limit || 10
@@ -19,7 +6,11 @@ const index = (req,res) => {
     if(Number.isNaN(limit)){
         return res.status(400).end();
     }
-    res.json(users.slice(0,limit));
+
+    models.User.findAll({})
+            .then(users => {
+                res.json(users);
+            })
 }
 
 const show = (req,res)=>{
