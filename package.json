@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha index.spec.js",
-    "start": "node index.js"
+    "test": "cross-env NODE_ENV=test mocha api/user/user.spec.js",
+    "start": "node bin/www.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "mocha": "^10.2.0",
     "should": "^13.2.3",
     "supertest": "^6.3.3"
