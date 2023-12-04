@@ -4,11 +4,15 @@ const should = require('should');
 const models = require('../../models');
 
 describe('GET /users는 ',()=>{
+    const users = [
+        {name:'hi'},{name:'hiyo'},{name:'poatan'}
+    ]
+    before(()=> models.sequelize.sync({force:true}));
+    before(()=>{
+        return models.User.bulkCreate(users)//여러 개의 데이터를 입력하는 역할
+    })
     describe('성공 시',() => {
-        before((done)=>{
-            models.sequelize.sync({force:true});
-        })
-        it.only('유저 객체를 담은 배열로 응답한다 ',(done) => {
+        it('유저 객체를 담은 배열로 응답한다 ',(done) => {
             request(app)
                 .get('/users')
                 .end((err,res)=>{
@@ -38,7 +42,14 @@ describe('GET /users는 ',()=>{
 })
 
 
-describe('GET /users/1는',()=>{
+describe('GET /users/:id는',()=>{
+    const users = [
+        {name:'hi'},{name:'hiyo'},{name:'poatan'}
+    ]
+    before(()=> models.sequelize.sync({force:true}));
+    before(()=>{
+        return models.User.bulkCreate(users)//여러 개의 데이터를 입력하는 역할
+    })
     describe('성공 시',() => {
         it('id가 1인 유저 객체를 반환한다',(done) => {
             request(app)
@@ -70,6 +81,13 @@ describe('GET /users/1는',()=>{
 })
 
 describe('DELETE /users/1',() => {
+    const users = [
+        {name:'hi'},{name:'hiyo'},{name:'poatan'}
+    ]
+    before(()=> models.sequelize.sync({force:true}));
+    before(()=>{
+        return models.User.bulkCreate(users)//여러 개의 데이터를 입력하는 역할
+    })
     describe('성공 시',() => {
         it('204를 응답한다', (done) => {
             request(app)
@@ -91,7 +109,14 @@ describe('DELETE /users/1',() => {
 });
 
 
-describe('POST /users',()=> {
+describe.only('POST /users',()=> {
+    const users = [
+        {name:'hi'},{name:'hiyo'},{name:'poatan'}
+    ]
+    before(()=> models.sequelize.sync({force:true}));
+    before(()=>{
+        return models.User.bulkCreate(users)//여러 개의 데이터를 입력하는 역할
+    })
     describe('성공 시',() => {
         let name = 'daniel';
         let body;
@@ -127,7 +152,7 @@ describe('POST /users',()=> {
         it("name이 중복일 경우 409를 반환한다",(done) => {
             request(app)
                 .post('/users')
-                .send({name:'hello'})
+                .send({name:'hiyo'})
                 .expect(409)
                 .end(done)
         });
@@ -136,6 +161,13 @@ describe('POST /users',()=> {
 });
 
 describe('PUT /users/:id' ,()=>{
+    const users = [
+        {name:'hi'},{name:'hiyo'},{name:'poatan'}
+    ]
+    before(()=> models.sequelize.sync({force:true}));
+    before(()=>{
+        return models.User.bulkCreate(users)//여러 개의 데이터를 입력하는 역할
+    })
     describe('성공 시',() => {
         it('변경된 name을 응답한다.',(done) =>{
             const name = 'den'
